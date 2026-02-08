@@ -53,7 +53,6 @@ if (DEF_IS_LOCAL)
 require_once DEF_DOC_ROOT.'vendor/autoload.php';
 require_once DEF_DOC_ROOT.'inc/functions.php';
 require_once DEF_DOC_ROOT.'inc/constants.php';
-require_once DEF_DOC_ROOT.'inc/dropdowns.php';
 
 $arAdditionalCSS = $arAdditionalJs = $arAdditionalJsScripts = $arAdditionalJsOnLoad = [];
 $arUser = [];

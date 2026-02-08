@@ -69,9 +69,9 @@ $('#registerForm #btnSubmit').click(function()
   {
     throwError('Email is incorrect');
   }
-  else if (password.length < 6)
+  else if (password.length < 8)
   {
-    throwError('Password must contain at least 6 characters');
+    throwError('Password must contain at least 8 characters');
   }
   else if (password != password_confirmation)
   {

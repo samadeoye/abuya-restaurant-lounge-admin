@@ -4,7 +4,7 @@ if (isset($_SESSION[SESSION_NAME]))
 {
   header("Location: {$baseUrl}");
 }
-$pageTitle = 'Login';
+$pageTitle = 'Forgot Password';
 
 $pathImg = DEF_PATH_ASSETS_IMG;
 $pageContent = <<<EOQ
@@ -16,21 +16,18 @@ $pageContent = <<<EOQ
         <div class="brand-logo">
           <img src="{$pathImg}/logo.png">
         </div>
-        <h4>Hello! let's get started</h4>
-        <h6 class="fw-light">Sign in to continue.</h6>
-        <form method="post" onsubmit="return false;" class="pt-3" id="loginForm">
-          <input type="hidden" name="action" id="action" value="login">
+        <h4>Forgot your password?</h4>
+        <h6 class="fw-light">Fill this to continue.</h6>
+        <form method="post" onsubmit="return false;" class="pt-3" id="forgotPasswordForm">
+          <input type="hidden" name="action" id="action" value="forgotpassword">
           <div class="form-group">
             <input type="email" class="form-control form-control-lg" id="email" name="email" placeholder="Email">
           </div>
-          <div class="form-group">
-            <input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="Password">
-          </div>
           <div class="mt-3 d-grid gap-2">
-            <a class="btn btn-block btn-primary btn-lg fw-semibold auth-form-btn" id="btnSubmit">SIGN IN</a>
+            <a class="btn btn-block btn-primary btn-lg fw-semibold auth-form-btn" id="btnSubmit">SUBMIT</a>
           </div>
           <div class="my-2 d-flex justify-content-between align-items-center">
-            <a href="forgot-password" class="auth-link text-black">Forgot password?</a>
+            <a href="login" class="auth-link text-black">Back to Login</a>
           </div>
         </form>
       </div>
@@ -42,28 +39,23 @@ EOQ;
 
 $additionalJsOnLoad[] = <<<EOQ
 
-$('#loginForm #btnSubmit').click(function ()
+$('#forgotPasswordForm #btnSubmit').on('click', function ()
 {
-  var formId = '#loginForm';
+  var formId = '#forgotPasswordForm';
   var email = $(formId+' #email').val();
-  var password = $(formId+' #password').val();
 
   if (email.length < 13 || email.length > 100)
   {
     throwError('Email is invalid');
   }
-  else if (password.length < 8)
-  {
-    throwError('Password is invalid');
-  }
   else
   {
-    var loginForm = $("#loginForm");
+    var forgotPasswordForm = $("#forgotPasswordForm");
     $.ajax({
       url: 'actions',
       type: 'POST',
       dataType: 'json',
-      data: loginForm.serialize(),
+      data: forgotPasswordForm.serialize(),
       beforeSend: function() {
         enableDisableBtn(formId+' #btnSubmit', 0);
       },
@@ -74,21 +66,12 @@ $('#loginForm #btnSubmit').click(function ()
       {
         if (data.status == true)
         {
-          throwSuccess('Login successful! Logging you in...');
-          loginForm[0].reset();
-          //redirect to dashboard
-          window.location.href = '{$baseUrl}';
+          throwSuccess(data.msg);
+          forgotPasswordForm[0].reset();
         }
         else
         {
-          if (data.info !== undefined)
-          {
-            throwError(data.msg);
-          }
-          else
-          {
-            throwError(data.msg);
-          }
+          throwError(data.msg);
         }
       }
     });

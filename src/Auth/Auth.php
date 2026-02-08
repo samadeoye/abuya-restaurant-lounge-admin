@@ -86,6 +86,48 @@ class Auth
         }
     }
 
+    public static function forgotPassword($request)
+    {
+        $response = Api::callApi([
+            'method' => 'POST',
+            'resource' => 'forgot-password',
+            'payload' => [
+                'email' => $request['email'],
+                'redirect_url' => DEF_FULL_ROOT_PATH.'/reset-password'
+            ]
+        ]);
+        if (isset($response['status']) && isset($response['status']))
+        {
+            self::$dataJson['msg'] = $response['status'];
+        }
+        else
+        {
+            throw new Exception('Request failed! Please try again');
+        }
+    }
+
+    public static function resetPassword($request)
+    {
+        $response = Api::callApi([
+            'method' => 'POST',
+            'resource' => 'reset-password',
+            'payload' => [
+                'token' => $request['token'],
+                'email' => $request['email'],
+                'password' => trim($request['password']),
+                'password_confirmation' => trim($request['password_confirmation']),
+            ]
+        ]);
+        if (isset($response['status']) && isset($response['status']))
+        {
+            self::$dataJson['msg'] = $response['status'];
+        }
+        else
+        {
+            throw new Exception('Request failed! Please try again');
+        }
+    }
+
     public static function getUserSession()
     {
         if (isset($_SESSION[self::$sessionName]))

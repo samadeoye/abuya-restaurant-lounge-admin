@@ -33,6 +33,16 @@ try
             Auth::logout();
         break;
 
+        case 'forgotpassword':
+            Auth::forgotPassword($_REQUEST);
+            $extraData = Auth::$dataJson;
+        break;
+
+        case 'resetpassword':
+            Auth::resetPassword($_REQUEST);
+            $extraData = Auth::$dataJson;
+        break;
+
         //USER
         case 'updateprofile':
             User::updateUser($_REQUEST);
