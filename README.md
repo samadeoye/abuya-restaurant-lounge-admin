@@ -1,4 +1,4 @@
-# Admin Panel – Restaurant & Lounge
+# Admin Panel - Restaurant & Lounge
 
 A web-based admin application for managing a restaurant and lounge.  
 This panel allows administrators to manage products (food and drinks), rooms, and customer orders.
@@ -10,6 +10,7 @@ The admin panel communicates with a backend API, which is hosted in a separate r
 - Create, update, and delete products (food & drinks)
 - Create, update, and delete rooms
 - Create and update orders
+- Manage settings, including e-commerce settings, such as delivery rates.
 
 ## Technologies Used
 
